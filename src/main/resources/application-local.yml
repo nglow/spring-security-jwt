@@ -1,0 +1,38 @@
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+  datasource:
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost/jwt?characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        #        show_sql: sql
+        format_sql: true
+    open-in-view: false
+
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:sql/data.sql
+      schema-locations: classpath:sql/schema.sql
+
+jwt:
+  header: Authorization
+  #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+  #echo 'nglow-tech-spring-boot-jwt-tutorial-secret-nglow-tech-spring-boot-jwt-tutorial-secret-nglow-tech-spring-boot-jwt-tutorial-secret'|base64
+  secret: bmdsb3ctdGVjaC1zcHJpbmctYm9vdC1qd3QtdHV0b3JpYWwtc2VjcmV0LW5nbG93LXRlY2gtc3ByaW5nLWJvb3Qtand0LXR1dG9yaWFsLXNlY3JldC1uZ2xvdy10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
+
