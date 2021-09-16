@@ -9,4 +9,11 @@ import lombok.NoArgsConstructor;
 public class TokenDto {
 
     private String token;
+
+    public static TokenDto of(String token) {
+        var tokenDto = new TokenDto();
+        tokenDto.token = token;
+
+        return tokenDto;
+    }
 }
