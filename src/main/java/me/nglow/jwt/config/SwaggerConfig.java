@@ -5,10 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import springfox.documentation.builders.*;
 import springfox.documentation.schema.ModelRef;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.ApiKey;
-import springfox.documentation.service.RequestParameter;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -25,6 +24,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
 //                .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
+                .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("me.nglow.jwt.controller"))
@@ -34,35 +34,26 @@ public class SwaggerConfig {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("Bearer", "Authorization", "header");
+        return new ApiKey("Authorization", "Authorization", "header");
     }
 
-//    private SecurityContext securityContext() {
-//        return SecurityContext.builder().securityReferences(defaultAuth()).build();
-//    }
-//
-//    private List<SecurityReference> defaultAuth() {
-//        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-//        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-//        authorizationScopes[0] = authorizationScope;
-//        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
-//    }
+    private SecurityContext securityContext() {
+        return springfox
+                .documentation
+                .spi.service
+                .contexts
+                .SecurityContext
+                .builder()
+                .securityReferences(defaultAuth()).forPaths(PathSelectors.any()).build();
+    }
 
-//    private List<RequestParameter> authorizationParameter() {
-//        RequestParameterBuilder tokenBuilder = new RequestParameterBuilder();
-//        tokenBuilder
-//                .name("Authorization") //헤더 이름
-//                .description("Access Tocken") //설명
-//                .contentModel(Mdoel)
-////                .modelRef(new ModelRef("string"))
-//                .parameterType("header")
-//                .required(false)
-//                .build();
-//
-//        List<RequestParameter> parameters = new ArrayList<>();
-//        parameters.add(tokenBuilder.build());
-//        return parameters;
-//    }
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
+    }
+
 
 
     private ApiInfo apiInfo() {
