@@ -17,4 +17,11 @@ public class Authority {
 
     @Column(name = "authority_name", length = 50)
     private String name;
+
+    public static Authority of(String authorityName) {
+        var authority = new Authority();
+        authority.name = authorityName;
+
+        return authority;
+    }
 }

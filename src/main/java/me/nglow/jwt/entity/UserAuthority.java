@@ -22,4 +22,12 @@ public class UserAuthority {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "authority_id")
     private Authority authority;
+
+    public static UserAuthority of(User user, Authority authority) {
+        var userAuthority = new UserAuthority();
+        userAuthority.user = user;
+        userAuthority.authority = authority;
+
+        return userAuthority;
+    }
 }

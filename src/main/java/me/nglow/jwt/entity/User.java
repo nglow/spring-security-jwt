@@ -30,4 +30,18 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserState state;
 
+    public static User of(String username, String password, String nickname) {
+        var user = new User();
+        user.username = username;
+        user.password = password;
+        user.nickname = nickname;
+        user.activateUser();
+
+        return user;
+    }
+
+    private void activateUser() {
+        this.state = UserState.ACTIVATED;
+    }
+
 }
