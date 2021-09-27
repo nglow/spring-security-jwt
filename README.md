@@ -14,7 +14,7 @@ JWT는 마침표(.)를 구분자로 가지는 세가지 문자열의 조합입�
 실제 디코딩된 JWT는 다음과 같은 구조를 가집니다.
 1. Header<br>
    
-   <p align="center"><img src="./image/header.png"></p>
+   <p align="center"><img src="./image/header.png" height="100px" width="300px"></p>
    
    ![header](./image/header.png)<br>
    Header는 해싱 알고리즘 및 토큰의 타입을 지정합니다.
