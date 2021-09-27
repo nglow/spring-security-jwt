@@ -12,16 +12,22 @@ JWT란 인증에 필요한 정보를 암호화 시킨 Token을 의미 합니다.
 ![jwt](./image/jwt.png)
 JWT는 마침표(.)를 구분자로 가지는 세가지 문자열의 조합입니다.
 실제 디코딩된 JWT는 다음과 같은 구조를 가집니다.
-1. Header<br>
+1. Header
+   
    ![header](./image/header.png)
+   
     Header는 해싱 알고리즘 및 토큰의 타입을 지정합니다.
-2. Payload<br>
+2. Payload
+   
    ![payload](./image/payload.png)
+   
     Payload는 토큰에 담으 정보를 기억합니다.
     주로 클라이언트의 고유 ID값 및 유효기간 등이 포함되는 영역입니다.
     **Key-Value 형식으로 이루어진 한 쌍의 정보를 *Claim*이라고 칭합니다.**  
-3. Signature<br>
+3. Signature
+   
     ![signature](./image/signature.png)
+   
     2Signature는 인코딩된 header와 payload를 더한뒤, 비밀로로 해싱하여 생성합니다.
     Header와 payload는 단순히 인코딩된 값이기 때문에 단순히 복호화 및 조작을 할 수 있지만, Signature는 서버 측에서 관리하는 비밀키가 유출되지
     않는한 복호화할 수 없습니다. 따라서 Signature는 토큰이 위변조 여부를 확인하는데 사용됩니다.
