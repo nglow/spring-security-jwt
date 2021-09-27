@@ -13,6 +13,9 @@ JWT란 인증에 필요한 정보를 암호화 시킨 Token을 의미 합니다.
 JWT는 마침표(.)를 구분자로 가지는 세가지 문자열의 조합입니다.
 실제 디코딩된 JWT는 다음과 같은 구조를 가집니다.
 1. Header<br>
+   
+   <p align="center"><img src="./image/header.png"></p>
+   
    ![header](./image/header.png)<br>
    Header는 해싱 알고리즘 및 토큰의 타입을 지정합니다.
 2. Payload<br>
