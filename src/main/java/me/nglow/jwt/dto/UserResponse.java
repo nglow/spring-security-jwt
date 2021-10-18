@@ -17,9 +17,9 @@ public class UserResponse {
 
     public static UserResponse from(User user) {
         var response = new UserResponse();
-        response.username = user.getUsername();
+        response.username = user.getEmail();
         response.password = user.getPassword();
-        response.nickname = user.getNickname();
+        response.nickname = user.getName();
 
         return response;
     }

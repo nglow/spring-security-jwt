@@ -18,23 +18,23 @@ public class User {
     private Long id;
 
     @Column(length = 50, unique = true)
-    private String username;
+    private String email;
 
     @JsonIgnore
     @Column(length = 100)
     private String password;
 
     @Column(length = 50)
-    private String nickname;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     private UserState state;
 
-    public static User of(String username, String password, String nickname) {
+    public static User of(String email, String password, String nickname) {
         var user = new User();
-        user.username = username;
+        user.email = email;
         user.password = password;
-        user.nickname = nickname;
+        user.name = nickname;
         user.activateUser();
 
         return user;
