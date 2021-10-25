@@ -31,10 +31,11 @@ public class UserService {
 
     @Transactional
     public UserResponse signup(UserDto userDto) {
-        if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
+        if (userRepository.findByUsername(userDto.getUsername()).isPresent()) {
             throw new RuntimeException("Username transmitted is already being used");
         }
-        var user = User.of(userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()), userDto.getName());
+
+        var user = User.of(userDto.getUsername(), passwordEncoder.encode(userDto.getPassword()), userDto.getNickname());
         var authority = authorityRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException("Can't find authority"));
         var userAuthority = UserAuthority.of(user, authority);
         userRepository.save(user);
@@ -43,7 +44,7 @@ public class UserService {
     }
 
     public UserAuthoritiesResponse getUserAuthorities(String username) {
-        var user = userRepository.findByEmail(username)
+        var user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Can't find user by username transmitted"));
         var authorities = userAuthorityRepository.findByUser(user).stream().map(UserAuthority::getAuthority).collect(Collectors.toList());
         return UserAuthoritiesResponse.from(user, authorities);

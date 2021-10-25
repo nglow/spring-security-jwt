@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.nglow.jwt.entity.Authority;
 import me.nglow.jwt.entity.User;
+import me.nglow.jwt.entity.UserAuthority;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,11 +14,11 @@ import java.util.stream.Collectors;
 @Getter
 public class UserAuthoritiesResponse {
 
-    private String email;
+    private String username;
 
     private String password;
 
-    private String name;
+    private String nickname;
 
     List<AuthoritiesResponse> authorities;
 
@@ -36,9 +37,9 @@ public class UserAuthoritiesResponse {
 
     public static UserAuthoritiesResponse from(User user, List<Authority> authorities) {
         var response = new UserAuthoritiesResponse();
-        response.email = user.getEmail();
+        response.username = user.getUsername();
         response.password = user.getPassword();
-        response.name = user.getName();
+        response.nickname = user.getNickname();
         response.authorities = authorities.stream().map(x -> AuthoritiesResponse.of(x.getName())).collect(Collectors.toList());
 
         return response;

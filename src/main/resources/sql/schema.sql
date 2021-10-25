@@ -15,12 +15,12 @@ create table user
 (
     user_id  bigint auto_increment
         primary key,
-    email varchar(50)  null,
+    nickname varchar(50)  null,
     password varchar(100) null,
     state    varchar(255) null,
-    name varchar(50)  null,
+    username varchar(50)  null,
     constraint UK_sb8bbouer5wak8vyiiy4pf2bx
-        unique (email)
+        unique (username)
 );
 
 create table user_authority

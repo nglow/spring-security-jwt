@@ -27,9 +27,9 @@ public class AuthenticationController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @PostMapping("/users/sign_in")
+    @PostMapping("/authenticate")
     public ResponseEntity<TokenDto> authenticate(@Valid @RequestBody LoginDto loginDto) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);

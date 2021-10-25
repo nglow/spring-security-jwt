@@ -31,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userRepository.findByEmail(username)
+        var user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Can't find user by username(" + username + ") transmitted"));
         var authorities = userAuthorityRepository.findByUser(user).stream()
                 .map(UserAuthority::getAuthority)
@@ -41,14 +41,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private org.springframework.security.core.userdetails.User createUser(User user, List<Authority> authorities) {
-        if (!user.getState().equals(UserState.ACTIVATED)) throw new RuntimeException("User found by username(" + user.getEmail() + ") transmitted is deactivated");
+        if (!user.getState().equals(UserState.ACTIVATED)) throw new RuntimeException("User found by username(" + user.getUsername() + ") transmitted is deactivated");
         else if (authorities.isEmpty()) throw new RuntimeException("User doesn't have any authorities");
 
         List<GrantedAuthority> grantedAuthorities = authorities.stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getName()))
                 .collect(Collectors.toList());
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(),
                 grantedAuthorities);
     }
